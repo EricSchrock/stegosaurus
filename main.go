@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"flag"
+	"fmt"
 )
 
 func main() {
@@ -27,4 +27,3 @@ func savePassword(name string) {
 func findPasswords(nameSubstring string) {
 	fmt.Println("Find:", nameSubstring)
 }
-

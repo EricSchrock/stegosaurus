@@ -3,6 +3,7 @@ all: build
 
 .PHONY: build
 build:
+	go fmt
 	go build
 
 .PHONY: test
