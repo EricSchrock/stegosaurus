@@ -14,10 +14,14 @@ func main() {
 	var findFlag = flag.String("find", "", "Find names matching the provided substring")
 
 	flag.Parse()
-	//todo: enforce one command line arg (print usage)
+	if flag.NFlag() != 1 {
+		flag.PrintDefaults()
+		return
+	}
 
 	fmt.Print("Password: ")
 	pwd, err := term.ReadPassword(int(syscall.Stdin))
+	fmt.Println()
 	if err != nil {
 		fmt.Println("Failed to read password:", err)
 		return
@@ -33,10 +37,8 @@ func main() {
 
 	if *saveFlag != "" {
 		savePassword(kek, *saveFlag)
-	} else if *findFlag != "" {
-		findPasswords(kek, *findFlag)
 	} else {
-		flag.PrintDefaults()
+		findPasswords(kek, *findFlag)
 	}
 }
 
