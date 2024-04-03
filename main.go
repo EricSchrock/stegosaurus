@@ -3,7 +3,10 @@ package main
 import (
 	"flag"
 	"fmt"
+	"syscall"
+
 	"golang.org/x/crypto/bcrypt"
+	"golang.org/x/term"
 )
 
 func main() {
@@ -13,15 +16,14 @@ func main() {
 	flag.Parse()
 	//todo: enforce one command line arg (print usage)
 
-	var pwd string
 	fmt.Print("Password: ")
-	_, err := fmt.Scanln(&pwd)
+	pwd, err := term.ReadPassword(int(syscall.Stdin))
 	if err != nil {
 		fmt.Println("Failed to read password:", err)
 		return
 	}
 
-	kek, err := bcrypt.GenerateFromPassword([]byte(pwd), bcrypt.DefaultCost)
+	kek, err := bcrypt.GenerateFromPassword(pwd, bcrypt.DefaultCost)
 	if err != nil {
 		fmt.Println("Failed to generate KEK:", err)
 		return
