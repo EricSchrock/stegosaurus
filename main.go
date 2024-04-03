@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func main() {
@@ -11,19 +12,28 @@ func main() {
 
 	flag.Parse()
 
+	pwd := "password123" //todo: prompt user for password
+
+	kek, err := bcrypt.GenerateFromPassword([]byte(pwd), bcrypt.DefaultCost)
+	if err != nil {
+		fmt.Printf("Failed to generate KEK: %v\n", err)
+	}
+
+	//todo: hash 480 bit kek or switch to different KDF
+
 	if *saveFlag != "" {
-		savePassword(*saveFlag)
+		savePassword(kek, *saveFlag)
 	}
 
 	if *findFlag != "" {
-		findPasswords(*findFlag)
+		findPasswords(kek, *findFlag)
 	}
 }
 
-func savePassword(name string) {
-	fmt.Println("Save:", name)
+func savePassword(kek []byte, name string) {
+	fmt.Println("KEK:", kek, "Save:", name)
 }
 
-func findPasswords(nameSubstring string) {
-	fmt.Println("Find:", nameSubstring)
+func findPasswords(kek []byte, nameSubstring string) {
+	fmt.Println("KEK", kek, "Find:", nameSubstring)
 }
