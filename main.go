@@ -11,22 +11,30 @@ func main() {
 	var findFlag = flag.String("find", "", "Find names matching the provided substring")
 
 	flag.Parse()
+	//todo: enforce one command line arg (print usage)
 
-	pwd := "password123" //todo: prompt user for password
+	var pwd string
+	fmt.Print("Password: ")
+	_, err := fmt.Scanln(&pwd)
+	if err != nil {
+		fmt.Println("Failed to read password:", err)
+		return
+	}
 
 	kek, err := bcrypt.GenerateFromPassword([]byte(pwd), bcrypt.DefaultCost)
 	if err != nil {
-		fmt.Printf("Failed to generate KEK: %v\n", err)
+		fmt.Println("Failed to generate KEK:", err)
+		return
 	}
 
 	//todo: hash 480 bit kek or switch to different KDF
 
 	if *saveFlag != "" {
 		savePassword(kek, *saveFlag)
-	}
-
-	if *findFlag != "" {
+	} else if *findFlag != "" {
 		findPasswords(kek, *findFlag)
+	} else {
+		flag.PrintDefaults()
 	}
 }
 

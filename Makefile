@@ -8,7 +8,10 @@ build:
 
 .PHONY: test
 test:
-	./stegosaurus --save hi --find hey
+	./stegosaurus
+	./stegosaurus --save hi
+	./stegosaurus --find hi
+	./stegosaurus --save hi --find hi
 
 .PHONY: clean
 clean:
