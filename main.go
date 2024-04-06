@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 	"syscall"
 
 	"golang.org/x/crypto/bcrypt"
@@ -15,6 +16,7 @@ func main() {
 
 	flag.Parse()
 	if flag.NFlag() != 1 {
+		log.Println("Must be called with one and only one valid input argument")
 		flag.PrintDefaults()
 		return
 	}
@@ -23,14 +25,12 @@ func main() {
 	pwd, err := term.ReadPassword(int(syscall.Stdin))
 	fmt.Println()
 	if err != nil {
-		fmt.Println("Failed to read password:", err)
-		return
+		log.Fatalln("Failed to read password:", err)
 	}
 
 	kek, err := bcrypt.GenerateFromPassword(pwd, bcrypt.DefaultCost)
 	if err != nil {
-		fmt.Println("Failed to generate KEK:", err)
-		return
+		log.Fatalln("Failed to generate KEK:", err)
 	}
 
 	//todo: hash 480 bit kek or switch to different KDF
