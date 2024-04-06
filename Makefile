@@ -8,10 +8,12 @@ build:
 
 .PHONY: test
 test:
+	touch test.png test.jpg test.jpeg
 	./stegosaurus
+	./stegosaurus --save hi --find hi
 	./stegosaurus --save hi
 	./stegosaurus --find hi
-	./stegosaurus --save hi --find hi
+	rm test.png test.jpg test.jpeg
 
 .PHONY: clean
 clean:
