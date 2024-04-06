@@ -12,8 +12,8 @@ import (
 )
 
 func main() {
-	var saveFlag = flag.String("save", "", "Generate and save a password for the provided name")
-	var findFlag = flag.String("find", "", "Find names matching the provided substring")
+	saveFlag := flag.String("save", "", "Generate and save a password for the provided name")
+	findFlag := flag.String("find", "", "Find names matching the provided substring")
 
 	flag.Parse()
 	if flag.NFlag() != 1 {
