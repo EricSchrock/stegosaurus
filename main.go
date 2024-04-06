@@ -22,6 +22,16 @@ func main() {
 		return
 	}
 
+	var op func([]byte, string, []string)
+	var str string
+	if *saveFlag != "" {
+		op = savePassword
+		str = *saveFlag
+	} else {
+		op = findPasswords
+		str = *findFlag
+	}
+
 	images := make([]string, 0)
 	for _, ext := range [3]string{"png", "jpg", "jpeg"} {
 		names, err := filepath.Glob("*." + ext)
@@ -45,11 +55,7 @@ func main() {
 
 	//todo: hash 480 bit kek or switch to different KDF
 
-	if *saveFlag != "" {
-		savePassword(kek, *saveFlag, images)
-	} else {
-		findPasswords(kek, *findFlag, images)
-	}
+	op(kek, str, images)
 }
 
 func savePassword(kek []byte, name string, images []string) {
