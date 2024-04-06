@@ -17,7 +17,7 @@ func main() {
 
 	flag.Parse()
 	if flag.NFlag() != 1 {
-		log.Print("Must be called with one and only one valid input argument")
+		fmt.Println("Must be called with one and only one valid input argument")
 		flag.PrintDefaults()
 		return
 	}
