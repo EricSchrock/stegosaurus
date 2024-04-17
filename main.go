@@ -68,8 +68,6 @@ func savePassword(kek []byte, name string, images []string) {
 
 	var e entry
 	e.init(name)
-	e.generate_password()
-
 	fmt.Println(e) //todo: insert entry into image
 }
 
@@ -94,10 +92,9 @@ func (e *entry) init(name string) {
 
 	e.magic = magic
 	copy(e.name[:], name)
-}
 
-func (e *entry) generate_password() {
-	copy(e.password[:], "password123") //todo: generate random password
+	password := "password123" //todo: generate random password
+	copy(e.password[:], password)
 }
 
 func (e *entry) check_magic() {
