@@ -7,15 +7,19 @@ build:
 	go build
 
 .PHONY: test
-test:
-	touch test.png test.jpg test.jpeg
+test: errors ok
+
+.PHONY: errors
+errors:
 	./stegosaurus
 	./stegosaurus --save hi --find hi
 	./stegosaurus --save abcdefghijklmnopqrstu
 	./stegosaurus --find abcdefghijklmnopqrstu
+
+.PHONY: ok
+ok:
 	./stegosaurus --save hi
 	./stegosaurus --find hi
-	rm test.png test.jpg test.jpeg
 
 .PHONY: clean
 clean:
